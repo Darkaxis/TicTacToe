@@ -8,15 +8,14 @@ const badgeVariants = cva(
     variants: {
       variant: {
         default:
-          "border-rhodes-bone bg-rhodes-bone text-rhodes-obsidian font-semibold",
-        rhodes:
-          "border-rhodes-cyan/50 bg-rhodes-cyan/10 text-rhodes-cyan",
-        reunion:
-          "border-rhodes-reunion/50 bg-rhodes-reunion/10 text-rhodes-reunion",
+          "border-tactical-bone bg-tactical-bone text-tactical-obsidian font-semibold",
+        cyan: "border-tactical-cyan/50 bg-tactical-cyan/10 text-tactical-cyan",
+        crimson:
+          "border-tactical-crimson/50 bg-tactical-crimson/10 text-tactical-crimson",
         caution:
-          "border-rhodes-amber/50 bg-rhodes-amber/10 text-rhodes-amber",
+          "border-tactical-amber/50 bg-tactical-amber/10 text-tactical-amber",
         outline:
-          "border-white/20 bg-rhodes-obsidian/80 text-rhodes-bone/75",
+          "border-white/20 bg-tactical-obsidian/80 text-tactical-bone/75",
       },
     },
     defaultVariants: {
@@ -36,4 +35,3 @@ function Badge({ className, variant, ...props }: BadgeProps) {
 }
 
 export { Badge, badgeVariants };
-

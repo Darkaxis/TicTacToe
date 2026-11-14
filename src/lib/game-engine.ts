@@ -1,47 +1,29 @@
-export type PlayerSymbol = "X" | "O";
-export type CellValue = PlayerSymbol | null;
-export type BoardState = CellValue[];
-export type GameMode = "AI" | "PVP";
-export type Difficulty = "EASY" | "NORMAL" | "UNBEATABLE";
+import {
+  BoardState,
+  CellCoordinate,
+  CellEvaluation,
+  Difficulty,
+  PlayerSymbol,
+  WinLineType,
+  WinningLine,
+} from "@/types/game";
 
-export interface SectorInfo {
-  index: number;
-  code: string; // A1..C3
-  rowLabel: string;
-  colLabel: string;
-}
-
-export const SECTORS: SectorInfo[] = [
-  { index: 0, code: "A1", rowLabel: "A", colLabel: "1" },
-  { index: 1, code: "A2", rowLabel: "A", colLabel: "2" },
-  { index: 2, code: "A3", rowLabel: "A", colLabel: "3" },
-  { index: 3, code: "B1", rowLabel: "B", colLabel: "1" },
-  { index: 4, code: "B2", rowLabel: "B", colLabel: "2" },
-  { index: 5, code: "B3", rowLabel: "B", colLabel: "3" },
-  { index: 6, code: "C1", rowLabel: "C", colLabel: "1" },
-  { index: 7, code: "C2", rowLabel: "C", colLabel: "2" },
-  { index: 8, code: "C3", rowLabel: "C", colLabel: "3" },
+export const CELL_COORDINATES: CellCoordinate[] = [
+  { index: 0, code: "A1", row: 0, col: 0 },
+  { index: 1, code: "A2", row: 0, col: 1 },
+  { index: 2, code: "A3", row: 0, col: 2 },
+  { index: 3, code: "B1", row: 1, col: 0 },
+  { index: 4, code: "B2", row: 1, col: 1 },
+  { index: 5, code: "B3", row: 1, col: 2 },
+  { index: 6, code: "C1", row: 2, col: 0 },
+  { index: 7, code: "C2", row: 2, col: 1 },
+  { index: 8, code: "C3", row: 2, col: 2 },
 ];
-
-export interface WinningVector {
-  line: [number, number, number];
-  winner: PlayerSymbol;
-  label: string;
-  angleType:
-    | "ROW-0"
-    | "ROW-1"
-    | "ROW-2"
-    | "COL-0"
-    | "COL-1"
-    | "COL-2"
-    | "DIAG-MAIN"
-    | "DIAG-ANTI";
-}
 
 export const WINNING_LINES: {
   line: [number, number, number];
   label: string;
-  angleType: WinningVector["angleType"];
+  angleType: WinLineType;
 }[] = [
   { line: [0, 1, 2], label: "Row A (A1–A3)", angleType: "ROW-0" },
   { line: [3, 4, 5], label: "Row B (B1–B3)", angleType: "ROW-1" },
@@ -53,7 +35,7 @@ export const WINNING_LINES: {
   { line: [2, 4, 6], label: "Diagonal (A3–C1)", angleType: "DIAG-ANTI" },
 ];
 
-export function evaluateWinner(board: BoardState): WinningVector | null {
+export function evaluateWinner(board: BoardState): WinningLine | null {
   for (const item of WINNING_LINES) {
     const [a, b, c] = item.line;
     if (board[a] && board[a] === board[b] && board[a] === board[c]) {
@@ -72,10 +54,12 @@ export function isBoardFull(board: BoardState): boolean {
   return board.every((cell) => cell !== null);
 }
 
-export interface CellEvaluation {
-  index: number;
-  score: number;
-  status: "BEST" | "SAFE" | "RISK" | "OCCUPIED";
+export function areOrthogonalNeighbors(a: number, b: number): boolean {
+  const ra = Math.floor(a / 3);
+  const ca = a % 3;
+  const rb = Math.floor(b / 3);
+  const cb = b % 3;
+  return Math.abs(ra - rb) + Math.abs(ca - cb) === 1;
 }
 
 function minimax(
@@ -130,14 +114,14 @@ function minimax(
   }
 }
 
-export function computeSectorEvaluations(
+export function computeCellEvaluations(
   board: BoardState,
   activePlayer: PlayerSymbol
 ): CellEvaluation[] {
   const win = evaluateWinner(board);
   if (win || isBoardFull(board)) {
-    return SECTORS.map((s) => ({
-      index: s.index,
+    return CELL_COORDINATES.map((cell) => ({
+      index: cell.index,
       score: 0,
       status: "OCCUPIED",
     }));
@@ -188,17 +172,17 @@ export function computeSectorEvaluations(
   return evaluations;
 }
 
-export function selectAIMove(
+export function selectBotMove(
   board: BoardState,
-  aiSymbol: PlayerSymbol,
+  botSymbol: PlayerSymbol,
   difficulty: Difficulty
 ): number {
-  const evaluations = computeSectorEvaluations(board, aiSymbol);
+  const evaluations = computeCellEvaluations(board, botSymbol);
   const available = evaluations.filter((e) => e.status !== "OCCUPIED");
 
   if (available.length === 0) return -1;
 
-  const opponentSymbol: PlayerSymbol = aiSymbol === "X" ? "O" : "X";
+  const opponentSymbol: PlayerSymbol = botSymbol === "X" ? "O" : "X";
 
   const findImmediateStrike = (symbol: PlayerSymbol): number | null => {
     for (const item of WINNING_LINES) {
@@ -217,7 +201,7 @@ export function selectAIMove(
   };
 
   if (difficulty === "EASY") {
-    const immediateWin = findImmediateStrike(aiSymbol);
+    const immediateWin = findImmediateStrike(botSymbol);
     if (immediateWin !== null && Math.random() < 0.7) {
       return immediateWin;
     }
@@ -227,7 +211,7 @@ export function selectAIMove(
   }
 
   if (difficulty === "NORMAL") {
-    const immediateWin = findImmediateStrike(aiSymbol);
+    const immediateWin = findImmediateStrike(botSymbol);
     if (immediateWin !== null) return immediateWin;
 
     const immediateBlock = findImmediateStrike(opponentSymbol);
@@ -250,3 +234,4 @@ export function selectAIMove(
 
   return bestMoves[0]?.index ?? available[0].index;
 }
+

@@ -41,7 +41,7 @@
   }
 }
 
-/* Arknights / Studio Montagne Chamfered Geometry & Surface Patterns */
+/* Chamfered Geometry & Surface Patterns */
 @layer utilities {
   .clip-chamfer-sm {
     clip-path: polygon(
@@ -98,14 +98,14 @@
 
   .bg-tactical-grid {
     background-size: 40px 40px;
-    background-image: 
+    background-image:
       linear-gradient(to right, rgba(236, 234, 228, 0.04) 1px, transparent 1px),
       linear-gradient(to bottom, rgba(236, 234, 228, 0.04) 1px, transparent 1px);
   }
 
   .bg-tactical-subgrid {
     background-size: 8px 8px;
-    background-image: 
+    background-image:
       linear-gradient(to right, rgba(236, 234, 228, 0.02) 1px, transparent 1px),
       linear-gradient(to bottom, rgba(236, 234, 228, 0.02) 1px, transparent 1px);
   }
@@ -135,7 +135,7 @@
     );
   }
 
-  .bg-hazard-reunion {
+  .bg-hazard-crimson {
     background: repeating-linear-gradient(
       -45deg,
       rgba(255, 59, 29, 0.16),
@@ -178,4 +178,3 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #00C8FF;
 }
-

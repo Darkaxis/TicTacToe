@@ -14,7 +14,7 @@ interface ScrambleTextProps {
 export function ScrambleText({
   text,
   className,
-  durationMs = 360,
+  durationMs = 320,
   triggerKey,
 }: ScrambleTextProps) {
   const [display, setDisplay] = useState(text);

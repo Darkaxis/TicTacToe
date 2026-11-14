@@ -1,9 +1,9 @@
 "use client";
 
-// Procedural Web Audio Synthesizer for PRTS / Rhodes Island Tactical HUD
-// Zero external asset dependencies; crisp industrial sci-fi acoustic feedback.
+// Procedural Web Audio Synthesizer for Tactical Grid UI
+// Zero external asset dependencies; crisp industrial acoustic feedback.
 
-class TacticalAudioEngine {
+class SoundEngine {
   private ctx: AudioContext | null = null;
   private enabled: boolean = true;
 
@@ -32,7 +32,6 @@ class TacticalAudioEngine {
     return this.enabled;
   }
 
-  // Micro mechanical relay tick on sector hover
   public playHoverTick() {
     const ctx = this.getContext();
     if (!ctx) return;
@@ -55,7 +54,6 @@ class TacticalAudioEngine {
     osc.stop(now + 0.016);
   }
 
-  // UI button latch switch
   public playLatchClick() {
     const ctx = this.getContext();
     if (!ctx) return;
@@ -78,14 +76,12 @@ class TacticalAudioEngine {
     osc.stop(now + 0.038);
   }
 
-  // Rhodes Island [X] Operator Deployment — Kinetic sub-thud + PRTS cyan lock chime
-  public playDeployRhodes() {
+  public playDeployX() {
     const ctx = this.getContext();
     if (!ctx) return;
 
     const now = ctx.currentTime;
 
-    // 1. Sub kinetic impact
     const subOsc = ctx.createOscillator();
     const subGain = ctx.createGain();
     subOsc.type = "sine";
@@ -98,7 +94,6 @@ class TacticalAudioEngine {
     subOsc.start(now);
     subOsc.stop(now + 0.16);
 
-    // 2. High-tech PRTS telemetry two-tone lock
     const hiOsc = ctx.createOscillator();
     const hiGain = ctx.createGain();
     hiOsc.type = "triangle";
@@ -112,14 +107,12 @@ class TacticalAudioEngine {
     hiOsc.stop(now + 0.18);
   }
 
-  // Reunion [O] Originium Deployment — Low metallic resonance + warning lock
-  public playDeployReunion() {
+  public playDeployO() {
     const ctx = this.getContext();
     if (!ctx) return;
 
     const now = ctx.currentTime;
 
-    // 1. Gritty bass pulse
     const bassOsc = ctx.createOscillator();
     const bassGain = ctx.createGain();
     bassOsc.type = "sawtooth";
@@ -139,7 +132,6 @@ class TacticalAudioEngine {
     bassOsc.start(now);
     bassOsc.stop(now + 0.18);
 
-    // 2. Descending tactical alert ping
     const pingOsc = ctx.createOscillator();
     const pingGain = ctx.createGain();
     pingOsc.type = "sine";
@@ -153,18 +145,17 @@ class TacticalAudioEngine {
     pingOsc.stop(now + 0.19);
   }
 
-  // Operation Cleared / Stalemate acoustic signature
-  public playOperationEnd(outcome: "X" | "O" | "DRAW") {
+  public playMatchEnd(outcome: "X" | "O" | "DRAW") {
     const ctx = this.getContext();
     if (!ctx) return;
 
     const now = ctx.currentTime;
     const notes =
       outcome === "X"
-        ? [587.33, 880.0, 1174.66, 1760.0] // D5 - A5 - D6 - A6 heroic Rhodes fifths
+        ? [587.33, 880.0, 1174.66, 1760.0]
         : outcome === "O"
-        ? [440.0, 415.3, 329.63, 220.0] // Tense Originium minor descent
-        : [659.25, 587.33, 659.25]; // Caution stalemate cadence
+        ? [440.0, 415.3, 329.63, 220.0]
+        : [659.25, 587.33, 659.25];
 
     notes.forEach((freq, idx) => {
       const osc = ctx.createOscillator();
@@ -186,5 +177,5 @@ class TacticalAudioEngine {
   }
 }
 
-export const tacticalAudio = new TacticalAudioEngine();
+export const soundEngine = new SoundEngine();
 

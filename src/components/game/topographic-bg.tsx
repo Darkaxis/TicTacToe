@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import { PlayerSymbol } from "@/types/game";
 
-interface TopographicCanvasProps {
-  activePlayer: "X" | "O";
+interface TopographicBgProps {
+  activePlayer: PlayerSymbol;
 }
 
-export function TopographicCanvas({ activePlayer }: TopographicCanvasProps) {
+export function TopographicBg({ activePlayer }: TopographicBgProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -26,7 +27,6 @@ export function TopographicCanvas({ activePlayer }: TopographicCanvasProps) {
     };
     window.addEventListener("resize", handleResize);
 
-    // Subtle floating Originium motes
     const particles = Array.from({ length: 22 }, (_, i) => ({
       x: ((i * 197) % 1000) / 1000,
       y: ((i * 313) % 1000) / 1000,
@@ -45,7 +45,6 @@ export function TopographicCanvas({ activePlayer }: TopographicCanvasProps) {
       const accentColor =
         activePlayer === "X" ? "rgba(0, 200, 255," : "rgba(255, 59, 29,";
 
-      // Clean, quiet topographic isolines
       ctx.lineWidth = 1;
       const lineCount = 5;
       for (let l = 0; l < lineCount; l++) {
@@ -67,7 +66,6 @@ export function TopographicCanvas({ activePlayer }: TopographicCanvasProps) {
         ctx.stroke();
       }
 
-      // Subtle drifting diamond dust
       for (const p of particles) {
         p.x = (p.x + p.vx + 1) % 1;
         p.y = (p.y + p.vy + 1) % 1;
@@ -99,3 +97,4 @@ export function TopographicCanvas({ activePlayer }: TopographicCanvasProps) {
     </div>
   );
 }
+

@@ -48,14 +48,14 @@ const config: Config = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        rhodes: {
+        tactical: {
           cyan: "#00C8FF",
           blue: "#0088CC",
           bone: "#ECEAE4",
           obsidian: "#090A0D",
           slate: "#12151B",
           panel: "#171B22",
-          reunion: "#FF3B1D",
+          crimson: "#FF3B1D",
           amber: "#FFD000",
         },
       },
@@ -66,7 +66,7 @@ const config: Config = {
         DEFAULT: "0px",
       },
       keyframes: {
-        "scanline": {
+        scanline: {
           "0%": { transform: "translateY(-100%)" },
           "100%": { transform: "translateY(1000%)" },
         },
@@ -84,7 +84,7 @@ const config: Config = {
         },
       },
       animation: {
-        "scanline": "scanline 8s linear infinite",
+        scanline: "scanline 8s linear infinite",
         "pulse-fast": "pulse-fast 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
         "marquee-vertical": "marquee-vertical 24s linear infinite",
         "marquee-horizontal": "marquee-horizontal 28s linear infinite",
@@ -95,4 +95,3 @@ const config: Config = {
 };
 
 export default config;
-

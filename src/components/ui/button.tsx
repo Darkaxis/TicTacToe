@@ -4,25 +4,25 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "group relative inline-flex items-center justify-center gap-2 whitespace-nowrap text-xs font-mono uppercase tracking-[0.16em] transition-all duration-150 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-rhodes-cyan disabled:pointer-events-none disabled:opacity-40 select-none overflow-hidden",
+  "group relative inline-flex items-center justify-center gap-2 whitespace-nowrap text-xs font-mono uppercase tracking-[0.16em] transition-all duration-150 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-tactical-cyan disabled:pointer-events-none disabled:opacity-40 select-none overflow-hidden",
   {
     variants: {
       variant: {
         default:
-          "bg-rhodes-bone text-rhodes-obsidian font-semibold border border-rhodes-bone hover:bg-rhodes-cyan hover:border-rhodes-cyan hover:text-rhodes-obsidian active:translate-y-[1px]",
-        rhodes:
-          "bg-rhodes-cyan/10 text-rhodes-cyan border border-rhodes-cyan/60 hover:bg-rhodes-cyan hover:text-rhodes-obsidian active:translate-y-[1px]",
-        reunion:
-          "bg-rhodes-reunion/10 text-rhodes-reunion border border-rhodes-reunion/60 hover:bg-rhodes-reunion hover:text-rhodes-bone active:translate-y-[1px]",
+          "bg-tactical-bone text-tactical-obsidian font-semibold border border-tactical-bone hover:bg-tactical-cyan hover:border-tactical-cyan hover:text-tactical-obsidian active:translate-y-[1px]",
+        cyan:
+          "bg-tactical-cyan/10 text-tactical-cyan border border-tactical-cyan/60 hover:bg-tactical-cyan hover:text-tactical-obsidian active:translate-y-[1px]",
+        crimson:
+          "bg-tactical-crimson/10 text-tactical-crimson border border-tactical-crimson/60 hover:bg-tactical-crimson hover:text-tactical-bone active:translate-y-[1px]",
         destructive:
-          "bg-rhodes-reunion text-rhodes-bone border border-rhodes-reunion hover:bg-rhodes-reunion/90",
+          "bg-tactical-crimson text-tactical-bone border border-tactical-crimson hover:bg-tactical-crimson/90",
         outline:
-          "border border-white/15 bg-rhodes-slate/90 text-rhodes-bone/85 hover:border-rhodes-cyan/70 hover:text-rhodes-cyan hover:bg-rhodes-panel",
+          "border border-white/15 bg-tactical-slate/90 text-tactical-bone/85 hover:border-tactical-cyan/70 hover:text-tactical-cyan hover:bg-tactical-panel",
         secondary:
-          "bg-rhodes-panel text-rhodes-bone border border-white/10 hover:border-white/30 hover:bg-white/10",
+          "bg-tactical-panel text-tactical-bone border border-white/10 hover:border-white/30 hover:bg-white/10",
         ghost:
-          "text-rhodes-bone/70 hover:bg-white/5 hover:text-rhodes-bone",
-        link: "text-rhodes-cyan underline-offset-4 hover:underline",
+          "text-tactical-bone/70 hover:bg-white/5 hover:text-tactical-bone",
+        link: "text-tactical-cyan underline-offset-4 hover:underline",
       },
       size: {
         default: "h-9 px-4 py-2",
@@ -69,4 +69,3 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 Button.displayName = "Button";
 
 export { Button, buttonVariants };
-
