@@ -1,0 +1,181 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 225 18% 4%;
+    --foreground: 45 17% 91%;
+    --card: 220 19% 8%;
+    --card-foreground: 45 17% 91%;
+    --popover: 225 18% 5%;
+    --popover-foreground: 45 17% 91%;
+    --primary: 193 100% 50%;
+    --primary-foreground: 225 18% 4%;
+    --secondary: 218 19% 11%;
+    --secondary-foreground: 45 17% 91%;
+    --muted: 218 19% 11%;
+    --muted-foreground: 45 10% 60%;
+    --accent: 193 100% 50%;
+    --accent-foreground: 225 18% 4%;
+    --destructive: 8 100% 56%;
+    --destructive-foreground: 45 17% 91%;
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 193 100% 50%;
+    --radius: 0rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    border-radius: 0px !important;
+  }
+
+  html,
+  body {
+    @apply bg-[#090A0D] text-[#ECEAE4] antialiased selection:bg-[#00C8FF] selection:text-[#090A0D];
+    font-feature-settings: "zero" 1, "ss01" 1, "cv02" 1;
+    overflow-x: hidden;
+  }
+}
+
+/* Arknights / Studio Montagne Chamfered Geometry & Surface Patterns */
+@layer utilities {
+  .clip-chamfer-sm {
+    clip-path: polygon(
+      0 0,
+      calc(100% - 8px) 0,
+      100% 8px,
+      100% 100%,
+      8px 100%,
+      0 calc(100% - 8px)
+    );
+  }
+
+  .clip-chamfer-md {
+    clip-path: polygon(
+      0 0,
+      calc(100% - 14px) 0,
+      100% 14px,
+      100% 100%,
+      14px 100%,
+      0 calc(100% - 14px)
+    );
+  }
+
+  .clip-chamfer-lg {
+    clip-path: polygon(
+      0 0,
+      calc(100% - 22px) 0,
+      100% 22px,
+      100% 100%,
+      22px 100%,
+      0 calc(100% - 22px)
+    );
+  }
+
+  .clip-notch-tr {
+    clip-path: polygon(
+      0 0,
+      calc(100% - 16px) 0,
+      100% 16px,
+      100% 100%,
+      0 100%
+    );
+  }
+
+  .clip-notch-bl {
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% 100%,
+      14px 100%,
+      0 calc(100% - 14px)
+    );
+  }
+
+  .bg-tactical-grid {
+    background-size: 40px 40px;
+    background-image: 
+      linear-gradient(to right, rgba(236, 234, 228, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(236, 234, 228, 0.04) 1px, transparent 1px);
+  }
+
+  .bg-tactical-subgrid {
+    background-size: 8px 8px;
+    background-image: 
+      linear-gradient(to right, rgba(236, 234, 228, 0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(236, 234, 228, 0.02) 1px, transparent 1px);
+  }
+
+  .bg-micro-dots {
+    background-image: radial-gradient(rgba(236, 234, 228, 0.14) 1px, transparent 1px);
+    background-size: 12px 12px;
+  }
+
+  .bg-hazard-amber {
+    background: repeating-linear-gradient(
+      -45deg,
+      rgba(255, 208, 0, 0.18),
+      rgba(255, 208, 0, 0.18) 6px,
+      transparent 6px,
+      transparent 12px
+    );
+  }
+
+  .bg-hazard-cyan {
+    background: repeating-linear-gradient(
+      -45deg,
+      rgba(0, 200, 255, 0.14),
+      rgba(0, 200, 255, 0.14) 6px,
+      transparent 6px,
+      transparent 12px
+    );
+  }
+
+  .bg-hazard-reunion {
+    background: repeating-linear-gradient(
+      -45deg,
+      rgba(255, 59, 29, 0.16),
+      rgba(255, 59, 29, 0.16) 6px,
+      transparent 6px,
+      transparent 12px
+    );
+  }
+
+  .bg-hazard-bone {
+    background: repeating-linear-gradient(
+      -45deg,
+      rgba(236, 234, 228, 0.07),
+      rgba(236, 234, 228, 0.07) 5px,
+      transparent 5px,
+      transparent 10px
+    );
+  }
+
+  .writing-vertical {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+}
+
+/* Custom thin industrial scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #090A0D;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2C3340;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00C8FF;
+}
+
