@@ -168,10 +168,10 @@ export function WinLine({ winningLine }: WinLineProps) {
       />
 
       {coords.points.map(([cx, cy], idx) => (
-        <React.Fragment key={idx}>
+        <g key={idx} transform={`translate(${cx} ${cy})`}>
           <motion.circle
-            cx={cx}
-            cy={cy}
+            cx={0}
+            cy={0}
             r="5"
             stroke={color}
             strokeWidth="0.7"
@@ -183,7 +183,7 @@ export function WinLine({ winningLine }: WinLineProps) {
               duration: 0.55,
               ease: "easeOut",
             }}
-            style={{ originX: `${cx}px`, originY: `${cy}px` }}
+            style={{ originX: "0px", originY: "0px" }}
           />
           <motion.g
             initial={{ scale: 0, opacity: 0 }}
@@ -194,21 +194,21 @@ export function WinLine({ winningLine }: WinLineProps) {
               stiffness: 420,
               damping: 22,
             }}
-            style={{ originX: `${cx}px`, originY: `${cy}px` }}
+            style={{ originX: "0px", originY: "0px" }}
           >
             <rect
-              x={cx - 2.4}
-              y={cy - 2.4}
+              x={-2.4}
+              y={-2.4}
               width="4.8"
               height="4.8"
-              transform={`rotate(45 ${cx} ${cy})`}
+              transform="rotate(45)"
               fill="#090A0D"
               stroke="#ECEAE4"
               strokeWidth="0.85"
             />
-            <circle cx={cx} cy={cy} r="1" fill={color} />
+            <circle cx={0} cy={0} r="1" fill={color} />
           </motion.g>
-        </React.Fragment>
+        </g>
       ))}
     </svg>
   );

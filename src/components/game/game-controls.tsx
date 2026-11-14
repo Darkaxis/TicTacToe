@@ -218,11 +218,12 @@ export function GameControls({
                 <motion.button
                   key={stepNum}
                   type="button"
+                  disabled={isBotThinking}
                   initial={{ scale: 0.85, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 0.18, ease: "easeOut" }}
                   onClick={() => onJumpToStep(stepNum)}
-                  className={`border px-2 py-0.5 font-mono text-[10px] transition-colors ${
+                  className={`border px-2 py-0.5 font-mono text-[10px] transition-colors disabled:opacity-45 disabled:cursor-not-allowed ${
                     isCurrent
                       ? "border-tactical-cyan bg-tactical-cyan/20 text-tactical-bone font-bold"
                       : stepNum > currentStep
@@ -250,7 +251,10 @@ export function GameControls({
           <Button
             variant="outline"
             size="sm"
-            disabled={currentStep === 0 || isBotThinking}
+            disabled={
+              isBotThinking ||
+              currentStep <= (gameMode === "AI" && humanSymbol === "O" ? 1 : 0)
+            }
             onClick={onUndo}
             className="w-full"
           >

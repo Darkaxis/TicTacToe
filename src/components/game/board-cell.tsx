@@ -92,8 +92,8 @@ export function BoardCell({
       className={`group relative aspect-square w-full border transition-colors duration-150 focus:outline-none select-none overflow-hidden ${
         isWinningCell
           ? value === "X"
-            ? "bg-tactical-cyan/18 border-tactical-cyan z-10"
-            : "bg-tactical-crimson/22 border-tactical-crimson z-10"
+            ? "bg-tactical-cyan/20 border-tactical-cyan z-10"
+            : "bg-tactical-crimson/20 border-tactical-crimson z-10"
           : value !== null
           ? "bg-[#11151E] border-white/20"
           : "bg-[#0C0F16]/90 border-white/15 hover:bg-[#141924]"

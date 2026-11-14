@@ -74,7 +74,7 @@ export function ResultModal({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.22 }}
-          className="fixed inset-0 z-40 flex items-center justify-center bg-black/68 backdrop-blur-[2px] p-4"
+          className="fixed inset-0 z-40 flex items-center justify-center bg-black/70 backdrop-blur-[2px] p-4"
         >
           <motion.div
             initial={{ clipPath: "inset(48% 0% 48% 0%)", opacity: 0, y: 8 }}

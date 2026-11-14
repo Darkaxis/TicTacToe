@@ -64,7 +64,7 @@ export function MarkX({ isWinningCell = false, size = "lg" }: MarkProps) {
         />
 
         <motion.path
-          d="M20 14 L29 14 L86 71 L86 86 L71 86 L14 29 Z"
+          d="M14 20 L20 14 L29 14 L86 71 L86 80 L80 86 L71 86 L14 29 Z"
           fill={isWinningCell ? "#ECEAE4" : "#00C8FF"}
           initial={{ clipPath: "inset(0 100% 100% 0)", opacity: 0.4 }}
           animate={{ clipPath: "inset(0 0% 0% 0)", opacity: 1 }}
@@ -72,7 +72,7 @@ export function MarkX({ isWinningCell = false, size = "lg" }: MarkProps) {
         />
 
         <motion.path
-          d="M80 14 L86 20 L86 29 L29 86 L14 86 L14 71 L71 14 Z"
+          d="M71 14 L80 14 L86 20 L86 29 L29 86 L20 86 L14 80 L14 71 Z"
           fill="#ECEAE4"
           initial={{ clipPath: "inset(0 0% 100% 100%)", opacity: 0.4 }}
           animate={{ clipPath: "inset(0 0% 0% 0)", opacity: 1 }}
@@ -154,10 +154,11 @@ export function MarkO({ isWinningCell = false, size = "lg" }: MarkProps) {
           transition={{ duration: 0.24, ease: "easeOut" }}
         />
 
-        <motion.polygon
-          points="33,12 67,12 88,33 88,67 67,88 33,88 12,67 12,33"
+        <motion.path
+          d="M50 12 H67 L88 33 V67 L67 88 H33 L12 67 V33 L33 12 H50 Z"
           stroke={isWinningCell ? "#ECEAE4" : "#FF3B1D"}
           strokeWidth="6"
+          strokeLinecap="square"
           fill="rgba(255, 59, 29, 0.08)"
           initial={{ pathLength: 0, opacity: 0.3 }}
           animate={{ pathLength: 1, opacity: 1 }}

@@ -39,6 +39,7 @@ export function useTicTacToe() {
   const [resetSweepKey, setResetSweepKey] = useState<number>(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [pulseCenterIndex, setPulseCenterIndex] = useState<number | null>(null);
+  const [hasScoredRound, setHasScoredRound] = useState<boolean>(false);
 
   const [scores, setScores] = useState<ScoreBoard>({
     X: 0,
@@ -120,17 +121,32 @@ export function useTicTacToe() {
       if (winCheck) {
         setIsBoardShaking(true);
         setTimeout(() => setIsBoardShaking(false), 300);
-        setScores((prev) => ({
-          ...prev,
-          [winCheck.winner]: prev[winCheck.winner] + 1,
-        }));
+        if (!hasScoredRound) {
+          setHasScoredRound(true);
+          setScores((prev) => ({
+            ...prev,
+            [winCheck.winner]: prev[winCheck.winner] + 1,
+          }));
+        }
         setTimeout(() => soundEngine.playMatchEnd(winCheck.winner), 130);
       } else if (drawCheck) {
-        setScores((prev) => ({ ...prev, DRAW: prev.DRAW + 1 }));
+        if (!hasScoredRound) {
+          setHasScoredRound(true);
+          setScores((prev) => ({ ...prev, DRAW: prev.DRAW + 1 }));
+        }
         setTimeout(() => soundEngine.playMatchEnd("DRAW"), 130);
       }
     },
-    [board, isGameOver, gameMode, activePlayer, humanSymbol, currentStep, history]
+    [
+      board,
+      isGameOver,
+      gameMode,
+      activePlayer,
+      humanSymbol,
+      currentStep,
+      history,
+      hasScoredRound,
+    ]
   );
 
   useEffect(() => {
@@ -168,6 +184,7 @@ export function useTicTacToe() {
     setIsBotThinking(false);
     setBannerDismissed(false);
     setShowResultBanner(false);
+    setHasScoredRound(false);
     setHoveredIndex(null);
     setPulseCenterIndex(null);
     setResetSweepKey((k) => k + 1);
@@ -176,16 +193,19 @@ export function useTicTacToe() {
   }, []);
 
   const undoMove = useCallback(() => {
-    if (currentStep === 0 || isBotThinking) return;
+    const minHumanStep = gameMode === "AI" && humanSymbol === "O" ? 1 : 0;
+    if (currentStep <= minHumanStep || isBotThinking) return;
     soundEngine.playLatchClick();
     const stepBack =
-      gameMode === "AI" && currentStep >= 2
-        ? currentStep - 2
+      gameMode === "AI"
+        ? activePlayer === humanSymbol
+          ? Math.max(minHumanStep, currentStep - 2)
+          : Math.max(minHumanStep, currentStep - 1)
         : Math.max(0, currentStep - 1);
     setCurrentStep(stepBack);
     setBannerDismissed(false);
     setShowResultBanner(false);
-  }, [currentStep, isBotThinking, gameMode]);
+  }, [currentStep, isBotThinking, gameMode, activePlayer, humanSymbol]);
 
   const jumpToStep = useCallback((step: number) => {
     soundEngine.playLatchClick();
@@ -259,14 +279,43 @@ export function useTicTacToe() {
   );
 
   useEffect(() => {
+    if (history.length === 1) {
+      setHasScoredRound(false);
+    }
+  }, [history.length]);
+
+  useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey || e.metaKey || e.altKey || e.repeat) {
+        return;
+      }
       if (
         e.target instanceof HTMLInputElement ||
-        e.target instanceof HTMLTextAreaElement
+        e.target instanceof HTMLTextAreaElement ||
+        e.target instanceof HTMLSelectElement ||
+        (e.target instanceof HTMLElement && e.target.isContentEditable)
       ) {
         return;
       }
+
       const key = e.key.toUpperCase();
+
+      if (showResultBanner) {
+        if (key === "ESCAPE") {
+          e.preventDefault();
+          setBannerDismissed(true);
+          setShowResultBanner(false);
+        } else if (key === "R") {
+          resetGame();
+        }
+        return;
+      }
+
+      // Block global game shortcuts while any modal dialog (e.g. Guide) is open
+      if (document.querySelector('[role="dialog"]')) {
+        return;
+      }
+
       if (key >= "1" && key <= "9") {
         makeMove(parseInt(key, 10) - 1, false);
       } else if (key === "R") {
@@ -281,7 +330,14 @@ export function useTicTacToe() {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [makeMove, resetGame, toggleHints, undoMove, toggleAudio]);
+  }, [
+    makeMove,
+    resetGame,
+    toggleHints,
+    undoMove,
+    toggleAudio,
+    showResultBanner,
+  ]);
 
   const statusText = isGameOver
     ? winningLine
