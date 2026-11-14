@@ -21,9 +21,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PRTS // TACTICAL MATRIX — Rhodes Island Tic-Tac-Toe",
+  title: "TIC-TAC-TOE // TACTICAL GRID",
   description:
-    "Arknights PRTS Neural Tactical Simulation Matrix — React 19, Next.js, Tailwind CSS, and shadcn/ui.",
+    "Tactical Tic-Tac-Toe built with React 19, Next.js, Tailwind CSS, and shadcn/ui.",
 };
 
 export default function RootLayout({
@@ -42,4 +42,3 @@ export default function RootLayout({
     </html>
   );
 }
-
